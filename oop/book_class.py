@@ -1,69 +1,41 @@
- # library_system.py
+# book_class.py
 
 class Book:
-    """Base class for all types of books."""
+    """Class representing a book with title, author, and publication year."""
 
-    def __init__(self, title, author):
-        """Initialize the Book with a title and author."""
+    def __init__(self, title, author, year):
+        """Initialize a Book instance with title, author, and year."""
         self.title = title
         self.author = author
+        self.year = year
 
-class EBook(Book):
-    """Derived class representing an electronic book."""
+    def __del__(self):
+        """Print a message upon deletion of the Book instance."""
+        print(f"Deleting {self.title}")
 
-    def __init__(self, title, author, file_size):
-        """Initialize the EBook with a title, author, and file size."""
-        super().__init__(title, author)
-        self.file_size = file_size
+    def __str__(self):
+        """Return a string representation of the Book."""
+        return f"{self.title} by {self.author}, published in {self.year}"
 
-class PrintBook(Book):
-    """Derived class representing a print book."""
-
-    def __init__(self, title, author, page_count):
-        """Initialize the PrintBook with a title, author, and page count."""
-        super().__init__(title, author)
-        self.page_count = page_count
-
-class Library:
-    """Class to manage a collection of books."""
-
-    def __init__(self):
-        """Initialize the Library with an empty list of books."""
-        self.books = []
-
-    def add_book(self, book):
-        """Add a Book, EBook, or PrintBook instance to the library."""
-        self.books.append(book)
-
-    def list_books(self):
-        """Print details of each book in the library."""
-        for book in self.books:
-            if isinstance(book, EBook):
-                print(f"EBook: {book.title} by {book.author}, File Size: {book.file_size}KB")
-            elif isinstance(book, PrintBook):
-                print(f"PrintBook: {book.title} by {book.author}, Page Count: {book.page_count}")
-            else:
-                print(f"Book: {book.title} by {book.author}")
+    def __repr__(self):
+        """Return an official representation that recreates the Book instance."""
+        return f"Book('{self.title}', '{self.author}', {self.year})"
 
 # main.py (provided for testing)
-from library_system import Book, EBook, PrintBook, Library
+from book_class import Book
 
 def main():
-    # Create a Library instance
-    my_library = Library()
+    # Creating an instance of Book
+    my_book = Book("1984", "George Orwell", 1949)
 
-    # Create instances of each type of book
-    classic_book = Book("Pride and Prejudice", "Jane Austen")
-    digital_novel = EBook("Snow Crash", "Neal Stephenson", 500)
-    paper_novel = PrintBook("The Catcher in the Rye", "J.D. Salinger", 234)
+    # Demonstrating the str method
+    print(my_book)  # Expected to use str
 
-    # Add books to the library
-    my_library.add_book(classic_book)
-    my_library.add_book(digital_novel)
-    my_library.add_book(paper_novel)
+    # Demonstrating the repr method
+    print(repr(my_book))  # Expected to use repr
 
-    # List all books in the library
-    my_library.list_books()
+    # Deleting a book instance to trigger del
+    del my_book
 
 if __name__ == "__main__":
     main()
